@@ -1,0 +1,25 @@
+services:
+    _defaults:
+        public: false
+        autowire: true
+
+    Fontai\Bundle\FccBundle\Controller\:
+        resource: '../../Controller'
+        tags: ['controller.service_arguments']
+
+    Fontai\Bundle\FccBundle\Service\Fcc:
+        arguments:
+            - '@form.factory'
+            - '@router'
+            - '%kernel.cache_dir%'
+            - '%fcc.url%'
+
+    fcc.service:
+        alias: Fontai\Bundle\FccBundle\Service\Fcc
+        public: true
+
+    Fontai\Bundle\FccBundle\Twig\FccExtension:
+        arguments:
+            - '@fcc.service'
+        tags:
+            - { name: twig.extension }

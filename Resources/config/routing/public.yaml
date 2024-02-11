@@ -1,0 +1,4 @@
+fcc_attachment:
+    path:       /fcc/attachment/{filename}
+    controller: Fontai\Bundle\FccBundle\Controller\FccController::attachment
+    methods:    [GET]

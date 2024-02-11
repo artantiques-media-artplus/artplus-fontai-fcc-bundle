@@ -1,0 +1,14 @@
+fcc_tasks:
+    path:       /fcc/tasks
+    controller: Fontai\Bundle\FccBundle\Controller\FccController::tasks
+    methods:    [GET]
+
+fcc_task:
+    path:       /fcc/task
+    controller: Fontai\Bundle\FccBundle\Controller\FccController::task
+    methods:    [POST]
+
+fcc_upload:
+    path:       /fcc/upload
+    controller: Fontai\Bundle\FccBundle\Controller\FccController::upload
+    methods:    [POST]

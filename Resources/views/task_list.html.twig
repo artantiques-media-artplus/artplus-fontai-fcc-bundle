@@ -1,0 +1,104 @@
+<div id="tasks{% if done %}Done{% else %}InProgress{% endif %}" class="listAjax">
+  <div class="tasksWrap clearfix listAjaxWrap">
+    <div class="listAjaxContent">
+
+{%- if count > 0 %}
+
+      <div class="table-responsive">
+        <table class="table">
+          <tbody>
+
+    {%- for i, task in tasks %}
+
+            <tr>
+              <td class="l">{{ task.name }}</td>
+              <td class="r action">
+                <a data-toggle="collapse" data-target="#fcc_task_{{ done }}_{{ i }}" aria-expanded="false"
+                   class="editIcon" title="{% trans %}Ukázat více{% endtrans %}">
+                  <svg class="icon icon-caret-down">
+                    <use xlink:href="#icon-caret-down"></use>
+                  </svg>
+                </a>
+              </td>
+            </tr>
+            <tr class="collapse" id="fcc_task_{{ done }}_{{ i }}">
+              <td class="l" style="padding: 5px;">
+                <strong>{% trans %}Odesláno{% endtrans %}:</strong> {{ task.created_at|date('j. n. Y H:i') }}, {{ task.reported_by }}<br>
+
+      {%- if done %}
+
+                <strong>{% trans %}Vyřešeno{% endtrans %}:</strong> {{ task.updated_at|date('j. n. Y H:i') }}<br>
+                <br>
+
+      {%- endif %}
+
+                {{ task.description }}
+              </td>
+              <td>&nbsp;</td>
+            </tr>
+
+    {%- endfor %}
+
+          </tbody>
+        </table>
+      </div>
+
+    {%- if count > 10 %}
+
+      <div class="pager dataTables_paginate">
+        {#<a href="{{ path('fcc_tasks', { done: done, page: 1 }) }}" data-skip-history class="paginate_button first-page{% if page == 1 %} disabled{% endif %}" title="{% trans %}První{% endtrans %}">
+          <svg class="icon icon-first">
+            <use xlink:href="#icon-first"></use>
+          </svg>
+        </a>#}
+        <a href="{{ path('fcc_tasks', { done: done, page: page - 1 }) }}" data-skip-history class="paginate_button previous-page{% if page == 1 %} disabled{% endif %}" title="{% trans %}Předchozí{% endtrans %}">
+          <svg class="icon icon-next">
+            <use xlink:href="#icon-next"></use>
+          </svg>
+        </a>
+
+      {%- for curPage in startPage..endPage %}
+
+        <a href="{{ path('fcc_tasks', { done: done, page: curPage }) }}" data-skip-history class="paginate_button{% if curPage == page %} current{% endif %}">{{ curPage }}</a>
+
+        {%- if curPage == endPage and endPage != maxPage %}
+
+        <span class="ellipsis">...</span>
+        <a href="{{ path('fcc_tasks', { done: done, page: maxPage }) }}" data-skip-history class="paginate_button">{{ maxPage }}</a>
+
+        {%- endif %}
+      {%- endfor %}
+
+        {#<input type="text" size="3" class="smallInput" value="{{ page }}"
+                   onchange="taskList({% if done %}true{% else %}false{% endif %}, this.value);"
+                   onkeydown="var keyCode = event.keyCode ? event.keyCode : event.which; if (keyCode == 13) { $(this).trigger('change'); return false; }"/>#}
+
+        <a href="{{ path('fcc_tasks', { done: done, page: page + 1 }) }}" data-skip-history class="paginate_button next-page{% if page == maxPage %} disabled{% endif %}" title="{% trans %}Další{% endtrans %}">
+          <svg class="icon icon-previous">
+            <use xlink:href="#icon-previous"></use>
+          </svg>
+        </a>
+        {#<a href="{{ path('fcc_tasks', { done: done, page: maxPage }) }}" data-skip-history class="paginate_button last-page{% if page == maxPage %} disabled{% endif %}" title="{% trans %}Poslední{% endtrans %}">
+          <svg class="icon icon-last">
+            <use xlink:href="#icon-last"></use>
+          </svg>
+        </a>#}
+      </div>
+
+    {%- endif %}
+  {%- else %}
+
+      <p class="fcc-no-tickets">
+        <span class="circle">
+          <svg class="icon icon-tick-slim">
+            <use xlink:href="#icon-tick-slim"></use>
+          </svg>
+        </span>
+        {% trans %}Nemáte žádné otevřené žádosti{% endtrans %}
+      </p>
+
+{%- endif %}
+
+    </div>
+  </div>
+</div>

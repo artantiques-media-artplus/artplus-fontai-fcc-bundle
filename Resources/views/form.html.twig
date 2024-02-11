@@ -1,0 +1,37 @@
+{%- form_theme form_task 'bootstrap_4_layout.html.twig' %}
+
+{%- block fcc_form -%}
+    {{ form_start(form_task, {attr: {class: 'ajaxForm no-error-alert'}}) }}
+    <div class="wrap">
+        <div class="form-group">
+            {{ form_widget(form_task.subject) }}
+        </div>
+        <div class="form-group">
+            {{ form_widget(form_task.text) }}
+        </div>
+        <div class="form-group lastInput">
+            {{ form_widget(form_task.link) }}
+        </div>
+        <a onclick="$('#fcc_task_link').val((window.opener != null) && !window.opener.closed ? window.opener.location : window.location).trigger('change'); return false;" class="copyUrl">
+            <svg class="icon-copy-url">
+                <use xlink:href="#icon-copy-url"></use>
+            </svg>
+            {% trans %}Vložit link na aktuální okno{% endtrans %}
+        </a>
+    </div>
+        {{ form_widget(form_task._token) }}
+    {{ form_end(form_task, { render_rest: false }) }}
+
+    {{ form_start(form_upload, {attr: {id: 'fcc-upload', class: 'dropzone'}}) }}
+        <div class="fallback">
+            {{ form_widget(form_upload.file) }}
+        </div>
+    {{ form_end(form_upload) }}
+
+    <div class="text-right">
+        <button type="submit" class="btn btn-primary btn-with-icon">
+            <span class="btn-with-icon-icon"><svg class="icon icon-tick"><use xlink:href="#icon-send"></use></svg></span>
+            <strong class="btn-with-icon-text">{% trans %}Poslat{% endtrans %}</strong>
+        </button>
+    </div>
+{%- endblock fcc_form -%}
